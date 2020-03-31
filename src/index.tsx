@@ -21,6 +21,14 @@ export enum LineNumberPrefix {
   RIGHT = 'R',
 }
 
+interface Comments {
+  commentId: string;
+  index: number;
+  threadId: string;
+  timestamp: number;
+  paraId: string;
+}
+
 export interface ReactDiffViewerProps {
   // Old value to compare.
   oldValue: string;
@@ -61,6 +69,10 @@ export interface ReactDiffViewerProps {
   leftTitle?: string | JSX.Element;
   // Title for left column
   rightTitle?: string | JSX.Element;
+  // Show | Hide Commenting
+  showComments?: boolean;
+  // Comments
+  comments?: Comments;
 }
 
 export interface ReactDiffViewerState {
@@ -83,6 +95,8 @@ class DiffViewer extends React.Component<ReactDiffViewerProps, ReactDiffViewerSt
     extraLinesSurroundingDiff: 3,
     showDiffOnly: true,
     useDarkTheme: false,
+    showComments: false,
+    comments: null,
   };
 
   public static propTypes = {
@@ -502,7 +516,7 @@ class DiffViewer extends React.Component<ReactDiffViewerProps, ReactDiffViewerSt
         return diffNodes;
       },
     );
-  }
+  };
 
   public render = (): JSX.Element => {
     const {
